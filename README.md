@@ -38,15 +38,16 @@ PaytacaProject is a web application that displays a map with markers indicating 
    python manage.py runserver
    
 ### Frontend Setup
-Navigate to the frontend directory:
+
+1. Navigate to the frontend directory:
 
    ```bash
    cd PaytacaProject/frontend
 
-1. Install Node.js dependencies:
+2. Install Node.js dependencies:
    ```bash
    npm install
-2. Start the Vue.js development server:
+3. Start the Vue.js development server:
    ```bash
    npm run serve
 
