@@ -8,7 +8,7 @@
           <input
             type="text"
             placeholder="Search..."
-            v-model="searchTerm"
+            v-model="search"
             @input="searchMerchants"
             class="w-4/5 px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-indigo-500 text-black"
           />
@@ -68,26 +68,47 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import merchantsData from '@/assets/merchants.json'; // Import the JSON file
 
-const searchTerm = ref('');
+const search = ref('');
+const filteredMerchants = ref([]);
 const map = ref(null);
 
+const filterCategory = (category) => {
+  search.value = category;
+};
+
 const searchMerchants = () => {
-  const term = searchTerm.value.toLowerCase();
-  const merchant = merchantsData.results.find(merchant => merchant.name.toLowerCase().includes(term));
+  const searchTerm = search.value.toLowerCase();
+  filteredMerchants.value = merchantsData.results.filter(merchant => merchant.name.toLowerCase().includes(searchTerm));
   
-  if (merchant) {
+  // Clear existing markers from the map
+  map.value.eachLayer(layer => {
+    if (layer instanceof L.Marker) {
+      map.value.removeLayer(layer);
+    }
+  });
+
+  // Add markers for filtered merchants
+  filteredMerchants.value.forEach(merchant => {
     const latitude = parseFloat(merchant.location.latitude);
     const longitude = parseFloat(merchant.location.longitude);
+    const logoUrl = merchant.logos['30x30']; // Get the URL of the 30x30 logo
 
-    if (!isNaN(latitude) && !isNaN(longitude)) {
-      map.value.setView([latitude, longitude], 13);
+    if (!isNaN(latitude) && !isNaN(longitude) && logoUrl) {
+      const icon = L.divIcon({
+        html: `<div><img src="${logoUrl}" style="width: 30px; height: 30px;"><br>${merchant.name}</div>`,
+        iconSize: [30, 40], // Adjust the size if needed
+        iconAnchor: [15, 40] // Position the anchor point of the icon
+      });
+
+      L.marker([latitude, longitude], { icon }).addTo(map.value)
+        .bindPopup(merchant.name);
     }
-  }
+  });
 };
 
 // Initialize Leaflet map
@@ -98,13 +119,20 @@ onMounted(() => {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map.value);
 
-  // Add markers for all merchants
+  // Add markers for all merchants initially
   merchantsData.results.forEach(merchant => {
     const latitude = parseFloat(merchant.location.latitude);
     const longitude = parseFloat(merchant.location.longitude);
+    const logoUrl = merchant.logos['30x30']; // Get the URL of the 30x30 logo
 
-    if (!isNaN(latitude) && !isNaN(longitude)) {
-      L.marker([latitude, longitude]).addTo(map.value)
+    if (!isNaN(latitude) && !isNaN(longitude) && logoUrl) {
+      const icon = L.divIcon({
+        html: `<div><img src="${logoUrl}" style="width: 30px; height: 30px;"><br>${merchant.name}</div>`,
+        iconSize: [30, 40], // Adjust the size if needed
+        iconAnchor: [15, 40] // Position the anchor point of the icon
+      });
+
+      L.marker([latitude, longitude], { icon }).addTo(map.value)
         .bindPopup(merchant.name);
     }
   });
