@@ -1,4 +1,5 @@
 #PaytacaProject
+
 PaytacaProject is a web application built with Django and Vue.js that displays a map with markers indicating the locations of merchants.
 
 ##Features
