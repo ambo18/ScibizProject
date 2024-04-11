@@ -1,19 +1,19 @@
 <template>
   <div class="flex flex-col h-screen">
-    <h1 class="color-yellow-200">heeelo</h1>
+    <h1 class="color-yellow-200">Welcome to Merchant Locator</h1>
     <div class="flex flex-grow bg-gray-700 text-white">
-      <!-- Left half with images -->
+      <!-- Left half with search bar and categories -->
       <div class="w-1/2">
         <header class="bg-gray-200 p-4 flex justify-between items-center">
           <input
             type="text"
             placeholder="Search..."
-            v-model="search"
-            @input="filterImages"
+            v-model="searchTerm"
+            @input="searchMerchants"
             class="w-4/5 px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-indigo-500 text-black"
           />
           <button
-            @click="searchImages"
+            @click="searchMerchants"
             class="w-1/5 px-4 py-2 bg-gray-600 text-white rounded-lg ml-2"
           >
             Search
@@ -42,6 +42,7 @@
           </button>
         </div>
 
+        <!-- Display images -->
         <main class="container mx-auto px-4 py-8">
           <div class="grid grid-cols-3 gap-4">
             <img
@@ -67,55 +68,43 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import merchantsData from '@/assets/merchants.json'; // Import the JSON file
 
-const search = ref('');
-const images = [
-  { src: 'image1.jpg', category: 'gym' },
-  { src: 'image2.jpg', category: 'coffeeshop' },
-  { src: 'image3.jpg', category: 'restaurant' }
-  // Add more images as needed
-];
+const searchTerm = ref('');
+const map = ref(null);
 
-const filterImages = () => {
-  const searchTerm = search.value.toLowerCase();
-  return images.filter((image) => image.src.toLowerCase().includes(searchTerm));
-};
+const searchMerchants = () => {
+  const term = searchTerm.value.toLowerCase();
+  const merchant = merchantsData.results.find(merchant => merchant.name.toLowerCase().includes(term));
+  
+  if (merchant) {
+    const latitude = parseFloat(merchant.location.latitude);
+    const longitude = parseFloat(merchant.location.longitude);
 
-const filteredImages = computed(() => {
-  if (!search.value) {
-    return images;
+    if (!isNaN(latitude) && !isNaN(longitude)) {
+      map.value.setView([latitude, longitude], 13);
+    }
   }
-  return filterImages();
-});
-
-const filterCategory = (category) => {
-  search.value = category;
-};
-
-const searchImages = () => {
-  // Perform search functionality
-  console.log('Searching images...');
 };
 
 // Initialize Leaflet map
 onMounted(() => {
-  const map = L.map('map').setView([11.210323390068652, 125.00943694990097], 13);
+  map.value = L.map('map').setView([11.210323390068652, 125.00943694990097], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
-  }).addTo(map);
+  }).addTo(map.value);
 
-  // Add markers
+  // Add markers for all merchants
   merchantsData.results.forEach(merchant => {
     const latitude = parseFloat(merchant.location.latitude);
     const longitude = parseFloat(merchant.location.longitude);
 
     if (!isNaN(latitude) && !isNaN(longitude)) {
-      L.marker([latitude, longitude]).addTo(map)
+      L.marker([latitude, longitude]).addTo(map.value)
         .bindPopup(merchant.name);
     }
   });
