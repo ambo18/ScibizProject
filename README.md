@@ -21,25 +21,17 @@ PaytacaProject is a web application that displays a map with markers indicating 
 ### Backend Setup
 
 1. **Clone the repository**:
-
    ```bash
-   git clone https://github.com/ambo18/ScibizProject.git
-   
+   git clone https://github.com/ambo18/ScibizProject.git 
 2. Navigate to the backend directory:
-
    ```bash
-   cd PaytacaProject/backend
-   
+   cd PaytacaProject/backend   
 3. Install Python dependencies:
-
    ```bash
    pip install -r requirements.txt
-   
 4. Run Django migrations:
-
    ```bash
-   python manage.py migrate
-   
+   python manage.py migrate  
 5. Start the Django development server:
 
    ```bash
