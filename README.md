@@ -40,23 +40,21 @@ PaytacaProject is a web application that displays a map with markers indicating 
 ### Frontend Setup
 Navigate to the frontend directory:
 
-```bash
+   ```bash
    cd PaytacaProject/frontend
 
 1. Install Node.js dependencies:
+   ```bash
+   npm install
+2. Start the Vue.js development server:
+   ```bash
+   npm run serve
 
-bash
-Copy code
-npm install
-Start the Vue.js development server:
-
-bash
-Copy code
-npm run serve
-Usage
+### Usage
 Visit http://localhost:8000 in your web browser to view the application.
-Contributing
+
+### Contributing
 Contributions are welcome! Please open an issue or submit a pull request to suggest improvements or new features.
 
-License
+### License
 This project is licensed under the MIT License - see the LICENSE file for details.
