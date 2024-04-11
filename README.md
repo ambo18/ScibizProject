@@ -23,34 +23,35 @@ PaytacaProject is a web application that displays a map with markers indicating 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/PaytacaProject.git
-Navigate to the backend directory:
+   git clone https://github.com/ambo18/ScibizProject.git
+   
+2. Navigate to the backend directory:
 
-bash
-Copy code
-cd PaytacaProject/backend
-Install Python dependencies:
+   ```bash
+   cd PaytacaProject/backend
+   
+3. Install Python dependencies:
 
-bash
-Copy code
-pip install -r requirements.txt
-Run Django migrations:
+   ```bash
+   pip install -r requirements.txt
+   
+4. Run Django migrations:
 
-bash
-Copy code
-python manage.py migrate
-Start the Django development server:
+   ```bash
+   python manage.py migrate
+   
+5. Start the Django development server:
 
-bash
-Copy code
-python manage.py runserver
-Frontend Setup
+   ```bash
+   python manage.py runserver
+   
+### Frontend Setup
 Navigate to the frontend directory:
 
-bash
-Copy code
-cd PaytacaProject/frontend
-Install Node.js dependencies:
+```bash
+   cd PaytacaProject/frontend
+
+1. Install Node.js dependencies:
 
 bash
 Copy code
