@@ -1,22 +1,29 @@
-#PaytacaProject
+# PaytacaProject
 
-PaytacaProject is a web application built with Django and Vue.js that displays a map with markers indicating the locations of merchants.
+![PaytacaProject Logo](https://example.com/logo.png)
 
-##Features
-Display a map with markers showing the locations of merchants.
-Retrieve merchant data from a JSON file.
-Integrate Django backend with Vue.js frontend.
-Responsive design using Tailwind CSS.
-Installation
-Prerequisites
-Python (3.6 or higher)
-Node.js (with npm or yarn)
-Backend Setup
-Clone the repository:
+PaytacaProject is a web application that displays a map with markers indicating the locations of merchants. It is built with Django, Vue.js, and Tailwind CSS.
 
-bash
-Copy code
-git clone https://github.com/your-username/PaytacaProject.git
+## Features
+
+- **Interactive Map**: Display a map with markers showing the locations of merchants.
+- **Data Retrieval**: Retrieve merchant data from a JSON file.
+- **Backend-Frontend Integration**: Seamlessly integrate Django backend with Vue.js frontend.
+- **Responsive Design**: Utilize Tailwind CSS for a modern and responsive user interface.
+
+## Installation
+
+### Prerequisites
+
+- Python (3.6 or higher)
+- Node.js (with npm or yarn)
+
+### Backend Setup
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/your-username/PaytacaProject.git
 Navigate to the backend directory:
 
 bash
@@ -60,4 +67,3 @@ Contributions are welcome! Please open an issue or submit a pull request to sugg
 
 License
 This project is licensed under the MIT License - see the LICENSE file for details.
-
